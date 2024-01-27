@@ -1,11 +1,12 @@
 // 3rd party libraries
-import express from 'express';
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
-import morgan from 'morgan';
+const express = require('express');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
 
 // Routes
-import authRoute from './routes/authRoute.js';
+const authRoute = require('./routes/authRoute.js');
+
 
 // Config options
 dotenv.config();
@@ -15,7 +16,7 @@ const app = express();
 
 
 // Database connection
-import dbConnection from './config/db.js';
+const dbConnection = require('./config/db.js');
 dbConnection();
 
 
