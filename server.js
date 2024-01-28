@@ -6,7 +6,8 @@ const morgan = require('morgan');
 
 // Routes
 const authRoute = require('./routes/authRoute.js');
-const userRoute = require('./routes/userRoute'); 
+const userRoute = require('./routes/userRoute');
+const postRoute = require('./routes/postRoute'); 
 
 
 // Config options
@@ -35,6 +36,7 @@ if (process.env.NODE_ENV === 'development') {
 // Routes
 app.use('/auth', authRoute);
 app.use('/users', userRoute);
+app.use('/posts', postRoute);
 
 
 // Localhost settings
