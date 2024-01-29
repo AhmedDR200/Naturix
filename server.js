@@ -10,6 +10,7 @@ const authRoute = require('./routes/authRoute.js');
 const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
 const uploadRoute = require('./routes/uploadRoute');
+const chatRoute = require('./routes/chatRoute');
 
 
 // Config options
@@ -47,6 +48,7 @@ app.use('/auth', authRoute);
 app.use('/users', userRoute);
 app.use('/posts', postRoute);
 app.use('/upload', uploadRoute);
+app.use('/chat', chatRoute);
 
 
 // Localhost settings
