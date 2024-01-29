@@ -2,7 +2,7 @@ const Message = require('../models/messageModel');
 const asyncHandler = require('express-async-handler');
 
 
-export const addMessage = asyncHandler(async (req, res) => {
+exports.addMessage = asyncHandler(async (req, res) => {
     const { chatId, senderId, text } = req.body;
     const message = new Message({
       chatId,
@@ -17,7 +17,7 @@ export const addMessage = asyncHandler(async (req, res) => {
     }
 });
   
-export const getMessages = asyncHandler(async (req, res) => {
+exports.getMessages = asyncHandler(async (req, res) => {
     const { chatId } = req.params;
     try {
       const result = await Message.find({ chatId });

@@ -1,9 +1,9 @@
 // 3rd party libraries
 const express = require('express');
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
 const morgan = require('morgan');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
 
 // Routes
 const authRoute = require('./routes/authRoute.js');
@@ -11,6 +11,7 @@ const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
 const uploadRoute = require('./routes/uploadRoute');
 const chatRoute = require('./routes/chatRoute');
+const messageRoute = require('./routes/messageRoute');
 
 
 // Config options
@@ -49,6 +50,7 @@ app.use('/users', userRoute);
 app.use('/posts', postRoute);
 app.use('/upload', uploadRoute);
 app.use('/chat', chatRoute);
+app.use('/messages', messageRoute);
 
 
 // Localhost settings
