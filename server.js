@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const cors = require('cors');
 
 // Routes
 const authRoute = require('./routes/authRoute.js');
@@ -26,6 +27,8 @@ dbConnection();
 app.use(bodyParser.json({limit: '30mb', extended: true}));
 app.use(bodyParser.urlencoded({limit: '30mb', extended: true}));
 
+// Cors Middleware
+app.use(cors());
 
 // Morgan Middleware
 if (process.env.NODE_ENV === 'development') {

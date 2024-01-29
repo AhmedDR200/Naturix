@@ -14,11 +14,11 @@ router.post('/', createPost);
 
 router.route('/:id')
 .get(getPost)
-.put(updatePost)
+.patch(updatePost)
 .delete(deletePost);
 
 
 router.put('/:id/like', likePost);
-router.get('/timeline/all', getTimelinePosts);
+router.get('/:id/timeline', getTimelinePosts);
 
 module.exports = router;

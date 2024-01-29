@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 /**
  * @desc    Register a new user
@@ -9,29 +10,30 @@ const bcrypt = require('bcryptjs');
  */
 const registerUser = asyncHandler(
     async(req, res, next) => {
-        const {
-            username,
-            password,
-            firstname,
-            lastname
-        } = req.body;
 
         const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password, salt)
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        req.body.password = hashedPassword
+        const { username } = req.body;
 
-        const newUser = new User({
-            username,
-            password: hashedPassword,
-            firstname,
-            lastname
-        })
+        const newUser = new User(req.body)
 
         try{
-            await newUser.save();
+            const oldUser = await User.findOne({username});
+            if(oldUser){
+                return res.status(400).json({message: "User already exists"})
+            }
+            const user = await newUser.save();
+            const token = jwt.sign({
+                username: user.username,
+                id: user._id,
+            }, process.env.JWT_SECRET, {expiresIn: '10d'
+            })
 
             res.status(200).json({
                 status: 'success',
-                data: {newUser}
+                data: user,
+                token: token
             })
         }catch(error){
             res.status(500).json({message: error.message})
@@ -59,10 +61,21 @@ const loginUser = asyncHandler(
                 const validity = await bcrypt.compare(password, user.password)
     
     
-                validity? res.status(200).json({
-                    status: 'success',
-                    data: user
-                }): res.status(400).json("Wrong Password")
+                if(!validity){
+                    res.status(400).json({message:"Wrong password"})
+                }
+                else{
+                    const token = jwt.sign({
+                        username: user.username,
+                        id: user._id,
+                    }, process.env.JWT_SECRET, {expiresIn: '10d'
+                    })
+                    res.status(200).json({
+                        status: 'success',
+                        data: user,
+                        token: token
+                    })
+                }
             }
             else{
                 res.status(404).json("User does not exists")
