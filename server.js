@@ -8,7 +8,8 @@ const cors = require('cors');
 // Routes
 const authRoute = require('./routes/authRoute.js');
 const userRoute = require('./routes/userRoute');
-const postRoute = require('./routes/postRoute'); 
+const postRoute = require('./routes/postRoute');
+const uploadRoute = require('./routes/uploadRoute');
 
 
 // Config options
@@ -16,6 +17,11 @@ dotenv.config();
 
 
 const app = express();
+
+// Static files
+app.use(express.static('public'));
+app.use('/images', express.static('images'));
+
 
 
 // Database connection
@@ -40,6 +46,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/auth', authRoute);
 app.use('/users', userRoute);
 app.use('/posts', postRoute);
+app.use('/upload', uploadRoute);
 
 
 // Localhost settings

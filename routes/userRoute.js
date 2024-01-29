@@ -7,6 +7,7 @@ const {
     followUser,
     unFollowUser
 } = require('../controllers/userController');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
@@ -15,15 +16,14 @@ router.route('/')
 
 router.route('/:id')
 .get(getUser)
-.patch(updateUser)
-.delete(deleteUser);
+.patch(authMiddleware, updateUser)
+.delete(authMiddleware, deleteUser);
 
 router.route('/:id/follow')
-.patch(followUser);
+.patch(authMiddleware, followUser);
 
 router.route('/:id/unfollow')
-.patch(unFollowUser);
-
+.patch(authMiddleware, unFollowUser);
 
 
 module.exports = router;
